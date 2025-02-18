@@ -11,3 +11,29 @@ app = FastAPI(title="Heart Disease Prediction API")
 with open("heart.pkl", "rb") as f:
     model = pickle.load(f)
 
+class Patient(BaseModel): 
+    age: int
+    sex: int 
+    cp: int
+    trestbps: int 
+    chol: int  
+    fbs: int  
+    restecg: int 
+    thalach: int  
+    exang: int
+    oldpeak: float
+    slope:int  
+    ca: int 
+    thal:int  
+
+
+@app.get("/a")
+def read_root():
+    return {"message": "Welcome to Heart Prediction API"}
+
+@app.post("/predict")
+def predict(patient: Patient):
+    data = patient.dict()
+    df = pd.DataFrame([data])
+    prediction = model.predict(df)[0]
+    return {"Sick": int(prediction)}
