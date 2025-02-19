@@ -1,5 +1,4 @@
 import pickle
-from sklearn.model_selection import train_test_split
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI
@@ -7,7 +6,7 @@ from pydantic import BaseModel
 
 app = FastAPI(title="Heart Disease Prediction API")
 
-# Load the trained model
+# Загружаем модель
 with open("heart.pkl", "rb") as f:
     model = pickle.load(f)
 
@@ -22,12 +21,11 @@ class Patient(BaseModel):
     thalach: int  
     exang: int
     oldpeak: float
-    slope:int  
+    slope: int  
     ca: int 
-    thal:int  
+    thal: int  
 
-
-@app.get("/a")
+@app.get("/")
 def read_root():
     return {"message": "Welcome to Heart Prediction API"}
 
